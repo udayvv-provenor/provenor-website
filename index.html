@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provenor Systems — Engineering Employability Into Education</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; width: 100%; }
+
+:root {
+  --blue:    #1B3FE6;
+  --night:   #0F172A;
+  --teal:    #14B8A6;
+  --indigo:  #6366F1;
+  --green:   #16A34A;
+  --amber:   #FBBF24;
+  --ink:     #020617;
+  --sub:     #475569;
+  --muted:   #94a3b8;
+  --surface: #F1F5F9;
+  --white:   #FFFFFF;
+  --border:  #CBD5E1;
+  --nav-h:   68px;
+  --r:       12px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--ink);
+  background: var(--white);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* ===================== LOGO CSS ===================== */
+/* SVG wordmark — all glyphs on exact same baseline, no CSS stacking tricks */
+.provenor-logo {
+  display: inline-block;
+  line-height: 0;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.provenor-logo svg { display: block; }
+
+/* Provenor PNG logo */
+.prov-logo-img {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 0;
+}
+.prov-logo-img.nav-size  { height: 36px; display: block; }
+.prov-logo-img.foot-size { height: 30px; display: block; margin-bottom: 16px; }
+
+/* GradiumOS image logo helpers */
+.gos-img { display: inline-block; vertical-align: middle; line-height: 0; }
+
+/* GradiumOS inline CSS logo */
+.gos-logo {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.gos-logo .gos-gradium { color: #fff; }
+.gos-logo .gos-os { color: #22c55e; }
+.gos-logo .gos-os-wrap {
+  position: relative;
+  display: inline-block;
+}
+/* Size variants */
+.gos-logo.gos-sm { font-size: 0.78rem; }
+.gos-logo.gos-md { font-size: 1rem; }
+.gos-logo.gos-lg { font-size: 1.45rem; }
+.gos-logo.gos-xl { font-size: 3.2rem; }
+/* On light backgrounds */
+.gos-logo.on-light .gos-gradium { color: #475569; }
+.gos-logo.on-blue .gos-gradium { color: #fff; }
+
+/* ===================== NAV ===================== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 6%;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  z-index: 999;
+  transition: box-shadow .3s;
+  width: 100%;
+  box-sizing: border-box;
+}
+nav.scrolled { box-shadow: 0 2px 20px rgba(2,6,23,.06); }
+
+.logo {
+  display: flex; align-items: center; gap: 9px;
+  text-decoration: none;
+}
+
+.nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+.nav-links a {
+  font-size: .82rem; font-weight: 500; color: var(--sub);
+  text-decoration: none; transition: color .2s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-pill {
+  background: var(--blue); color: #fff !important;
+  padding: 8px 18px; border-radius: 7px;
+  font-weight: 600 !important; font-size: .82rem !important;
+  transition: opacity .2s, transform .15s !important;
+}
+.nav-pill:hover { opacity: .9; transform: translateY(-1px); }
+
+.burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.burger span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all .3s; }
+
+.mob-menu {
+  display: none; flex-direction: column; gap: 0;
+  position: fixed; top: var(--nav-h); left: 0; right: 0;
+  background: var(--white); border-bottom: 1px solid var(--border);
+  z-index: 998;
+  width: 100%;
+  box-sizing: border-box;
+}
+.mob-menu a {
+  padding: 16px 6%; font-size: .9rem; font-weight: 500;
+  color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--surface);
+  transition: background .15s;
+}
+.mob-menu a:hover { background: var(--surface); }
+.mob-menu a.cta-mob { color: var(--blue); font-weight: 700; }
+.mob-menu.open { display: flex; }
+
+/* UTILITIES */
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 6%; width: 100%; box-sizing: border-box; }
+section { padding: 100px 0; width: 100%; box-sizing: border-box; }
+
+.eyebrow {
+  display: inline-block;
+  font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 14px;
+}
+.eyebrow.tl { color: var(--teal); }
+.eyebrow.in { color: var(--indigo); }
+.eyebrow.gn { color: var(--green); }
+
+.h-xl {
+  font-size: clamp(2.6rem, 5.5vw, 4.5rem);
+  font-weight: 800; line-height: 1.08; color: var(--white); letter-spacing: -.03em;
+}
+.h-lg {
+  font-size: clamp(1.9rem, 3.5vw, 3rem);
+  font-weight: 700; line-height: 1.15; color: var(--ink); letter-spacing: -.02em;
+}
+.h-lg.inv { color: var(--white); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 13px 26px; border-radius: 8px;
+  font-size: .875rem; font-weight: 600; text-decoration: none;
+  transition: all .2s; cursor: pointer; border: none;
+}
+.btn-blue { background: var(--blue); color: #fff; box-shadow: 0 4px 16px rgba(27,63,230,.3); }
+.btn-blue:hover { background: #1535c8; box-shadow: 0 6px 24px rgba(27,63,230,.4); transform: translateY(-1px); }
+.btn-outline { border: 1.5px solid rgba(255,255,255,.25); color: rgba(255,255,255,.85); background: transparent; }
+.btn-outline:hover { border-color: rgba(255,255,255,.6); color: #fff; }
+.btn-outline-dark { border: 1.5px solid var(--border); color: var(--sub); background: transparent; }
+.btn-outline-dark:hover { border-color: var(--blue); color: var(--blue); }
+.btn-indigo { background: var(--indigo); color: #fff; }
+.btn-indigo:hover { background: #4f46e5; transform: translateY(-1px); }
+.btn-white { background: #fff; color: var(--blue); font-weight: 700; }
+.btn-white:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(0,0,0,.12); }
+
+.tag {
+  display: inline-block; padding: 4px 12px; border-radius: 100px;
+  font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+}
+.tag-blue  { background: rgba(27,63,230,.08);  color: var(--blue); }
+.tag-teal  { background: rgba(20,184,166,.1);  color: #0d9488; }
+.tag-amber { background: rgba(251,191,36,.12); color: #b45309; }
+
+/* SCROLL REVEAL */
+.r { opacity: 0; transform: translateY(28px); transition: opacity .55s ease, transform .55s ease; }
+.r.d1 { transition-delay: .1s; } .r.d2 { transition-delay: .2s; } .r.d3 { transition-delay: .3s; }
+.r.vis { opacity: 1; transform: none; }
+
+/* HERO */
+#hero {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--night);
+  display: flex; align-items: center;
+  padding-top: var(--nav-h);
+  position: relative; overflow: hidden;
+  box-sizing: border-box;
+}
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 55% at 80% 15%, rgba(27,63,230,.22) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 50% at 5% 85%,  rgba(20,184,166,.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 400px;
+  gap: 64px; align-items: center; padding: 80px 0;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(27,63,230,.15); border: 1px solid rgba(27,63,230,.3);
+  color: #93c5fd; font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; padding: 6px 14px; border-radius: 100px;
+  margin-bottom: 28px;
+  animation: fadeUp .5s ease both;
+}
+.hero-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal); animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.4)} }
+
+.hero-h1 { animation: fadeUp .55s .08s ease both; }
+.hero-h1 .accent { color: var(--blue); }
+.hero-sub {
+  font-size: 1.05rem; color: var(--muted); font-weight: 400; line-height: 1.75;
+  max-width: 480px; margin: 20px 0 36px;
+  animation: fadeUp .55s .16s ease both;
+}
+.hero-sub strong { color: #e2e8f0; font-weight: 500; }
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; animation: fadeUp .55s .24s ease both; }
+
+.hero-card-wrap { animation: fadeUp .55s .32s ease both; }
+.hero-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px; padding: 36px 30px;
+  backdrop-filter: blur(8px);
+}
+.hero-card-title {
+  font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 20px;
+}
+.step-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.step-row:last-of-type { border-bottom: none; }
+.step-dot {
+  width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .72rem; font-weight: 800; color: #fff;
+}
+.sd-blue  { background: rgba(27,63,230,.5);  }
+.sd-teal  { background: rgba(20,184,166,.4); }
+.sd-green { background: rgba(22,163,74,.4);  }
+.step-row h4 { font-size: .875rem; font-weight: 600; color: #e2e8f0; margin-bottom: 3px; }
+.step-row p  { font-size: .78rem; color: var(--muted); }
+
+.hero-stat-row {
+  display: flex; gap: 24px; margin-top: 12px; padding-top: 12px;
+}
+.hero-stat { text-align: center; flex: 1; }
+.hero-stat strong { display: block; font-size: 1.1rem; font-weight: 700; color: #fff; }
+/* FIX 4: Curriculum Changes on one line */
+.hero-stat span { font-size: .7rem; color: var(--muted); white-space: nowrap; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:none} }
+
+/* PROBLEM */
+.three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 52px; }
+
+.prob-card {
+  padding: 30px 26px; border-radius: var(--r);
+  border: 1px solid var(--border); background: var(--white);
+  position: relative; overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.prob-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(2,6,23,.08); }
+.prob-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.pc-blue::before  { background: var(--blue);  }
+.pc-amber::before { background: var(--amber); }
+.pc-teal::before  { background: var(--teal);  }
+.prob-card-who {
+  font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+}
+.prob-card h3 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; line-height: 1.35; }
+.prob-card p  { font-size: .855rem; color: var(--sub); line-height: 1.65; }
+
+.thesis-box {
+  background: var(--night); border-radius: var(--r);
+  padding: 48px 52px; margin-top: 48px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+}
+.thesis-quote {
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem); font-weight: 300;
+  color: #e2e8f0; line-height: 1.7; font-style: italic;
+}
+.thesis-quote strong { color: #fff; font-weight: 600; font-style: normal; }
+.thesis-right p { font-size: .9rem; color: var(--muted); line-height: 1.75; }
+
+/* HOW IT WORKS */
+.how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 52px; }
+.how-card {
+  border-radius: var(--r); padding: 34px 26px;
+  border: 1px solid var(--border); background: var(--white);
+  transition: transform .2s, box-shadow .2s;
+}
+.how-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(2,6,23,.09); }
+.how-num {
+  font-size: 2.4rem; font-weight: 900; line-height: 1;
+  margin-bottom: 18px; letter-spacing: -.05em;
+}
+.n-blue  { color: rgba(27,63,230,.18);  }
+.n-teal  { color: rgba(20,184,166,.22); }
+.n-green { color: rgba(22,163,74,.22);  }
+.how-card h3 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.how-card p  { font-size: .855rem; color: var(--sub); line-height: 1.7; }
+
+.how-footer {
+  margin-top: 36px; padding: 22px 28px;
+  background: var(--surface); border-radius: var(--r);
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+.how-footer p { font-size: .875rem; color: var(--sub); }
+.how-footer strong { color: var(--ink); }
+
+/* AUDIENCE */
+.audience-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 52px; }
+.aud-card {
+  text-decoration: none;
+  border-radius: 16px; padding: 34px 26px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.aud-card:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.16); transform: translateY(-4px); }
+/* FIX 1: Use CSS-only icons instead of emoji to prevent dark rendering on some devices */
+.aud-icon { font-size: 1.5rem; margin-bottom: 18px; line-height: 1; }
+.aud-icon svg { width: 28px; height: 28px; }
+.aud-card h3 { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.aud-card p  { font-size: .845rem; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
+.aud-arrow { font-size: .8rem; font-weight: 600; color: var(--blue); }
+
+/* SPLIT LAYOUT */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+
+.check-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+.check-list li {
+  display: flex; gap: 12px; align-items: flex-start;
+  font-size: .875rem; color: var(--sub); line-height: 1.65;
+}
+.check-list li::before {
+  content: '';
+  width: 18px; height: 18px; min-width: 18px; border-radius: 50%;
+  background: var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 5l2 2.5L8 3' stroke='%23fff' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/10px no-repeat;
+  margin-top: 2px;
+}
+
+.chip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 18px; }
+.chip {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 15px;
+  font-size: .8rem; font-weight: 500; color: var(--ink);
+}
+.chip.dark { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.08); color: #e2e8f0; }
+
+.pathway-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+.pt { border-radius: 10px; padding: 18px; border: 1px solid var(--border); background: var(--surface); }
+.pt.active { border-color: rgba(27,63,230,.35); background: rgba(27,63,230,.05); }
+.pt-label { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 5px; }
+.pt.active .pt-label { color: var(--blue); }
+.pt h4 { font-size: .845rem; font-weight: 600; color: var(--ink); }
+
+/* GRAD LIST */
+.grad-list { background: var(--night); border-radius: 16px; padding: 34px; }
+.grad-list-title { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 18px; }
+.grad-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+.grad-item:last-of-type { border-bottom: none; }
+/* FIX 1: SVG icons for grad-item instead of emoji */
+.grad-item .icon { width: 24px; height: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.grad-item p { font-size: .855rem; color: #e2e8f0; }
+
+/* EMPLOYER METRICS */
+.metric-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 52px; }
+.metric-card { border-radius: 16px; padding: 34px 26px; }
+.mc-blue  { background: var(--blue); }
+.mc-teal  { background: var(--teal); }
+.mc-night { background: var(--night); border: 1px solid rgba(255,255,255,.08); }
+.metric-card h3 { font-size: .95rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.metric-card p  { font-size: .82rem; color: rgba(255,255,255,.7); line-height: 1.65; }
+
+.emp-split {
+  margin-top: 36px; padding: 36px;
+  background: var(--surface); border-radius: var(--r);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+}
+.section-label { font-size: .8rem; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+
+/* GRADIUMOS */
+.gradiumos-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.engine-list { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; }
+.engine-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07);
+  border-radius: 10px; padding: 18px 20px;
+  transition: background .2s;
+}
+.engine-item:hover { background: rgba(255,255,255,.08); }
+.e-num { font-size: 1rem; font-weight: 800; color: var(--indigo); min-width: 22px; line-height: 1.5; }
+.engine-item h4 { font-size: .845rem; font-weight: 600; color: #fff; margin-bottom: 3px; }
+.engine-item p  { font-size: .78rem; color: var(--muted); }
+
+.why-panel {
+  background: rgba(99,102,241,.1); border: 1px solid rgba(99,102,241,.2);
+  border-radius: 16px; padding: 32px;
+}
+.why-panel h3 { font-size: .9rem; font-weight: 700; color: #fff; margin-bottom: 18px; }
+.why-row { display: flex; gap: 12px; margin-bottom: 14px; }
+.why-dot { width: 6px; height: 6px; min-width: 6px; background: var(--indigo); border-radius: 50%; margin-top: 8px; }
+.why-row p { font-size: .83rem; color: var(--muted); line-height: 1.65; }
+
+.diff-panel {
+  margin-top: 16px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px; padding: 26px;
+}
+.diff-panel-title { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 14px; }
+
+/* STORIES */
+.story-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 52px; }
+.story-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 28px 24px;
+  transition: transform .2s, box-shadow .2s;
+}
+.story-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(2,6,23,.09); }
+.story-card h3 { font-size: .9rem; font-weight: 700; color: var(--ink); margin: 10px 0 7px; }
+.story-card p  { font-size: .81rem; color: var(--sub); line-height: 1.65; }
+.outcome-row { display: flex; gap: 7px; margin-top: 14px; flex-wrap: wrap; }
+.o-chip { font-size: .68rem; font-weight: 700; padding: 4px 10px; border-radius: 100px; background: rgba(22,163,74,.1); color: var(--green); }
+.coming { font-size: .73rem; color: var(--border); font-style: italic; margin-top: 12px; display: block; }
+
+/* PERSPECTIVES */
+.persp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 52px; }
+.persp-card {
+  border: 1px solid var(--border); border-radius: var(--r); padding: 22px 20px;
+  cursor: pointer; transition: border-color .2s, transform .2s;
+}
+.persp-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+.persp-cat { font-size: .63rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: 9px; }
+.persp-card h4 { font-size: .875rem; font-weight: 600; color: var(--ink); line-height: 1.45; margin-bottom: 6px; }
+.persp-card p  { font-size: .77rem; color: var(--sub); line-height: 1.6; }
+
+/* CTA */
+.cta-section {
+  background: var(--blue); padding: 100px 0;
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 100% at 50% 110%, rgba(255,255,255,.09), transparent 60%);
+}
+.cta-section h2 {
+  font-size: clamp(1.7rem, 3.5vw, 2.8rem); font-weight: 800; color: #fff;
+  letter-spacing: -.02em; margin-bottom: 14px;
+}
+.cta-section p { font-size: .95rem; color: rgba(255,255,255,.72); max-width: 440px; margin: 0 auto 36px; }
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+/* FOOTER */
+footer { background: var(--ink); padding: 72px 0 32px; }
+.foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 52px; }
+.foot-brand-name {
+  display: block; margin-bottom: 0;
+}
+.foot-brand p { font-size: .8rem; color: #64748b; line-height: 1.8; max-width: 260px; }
+.foot-col h5 {
+  font-size: .63rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: #64748b; margin-bottom: 16px;
+}
+.foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.foot-col a { font-size: .8rem; color: #94a3b8; text-decoration: none; transition: color .2s; }
+.foot-col a:hover { color: #fff; }
+.foot-col .gos-gradium { color: #94a3b8; }
+.foot-col a:hover .gos-gradium { color: #fff; }
+.nav-links .gos-gradium { color: var(--sub); }
+.nav-links a:hover .gos-gradium { color: var(--ink); }
+.foot-bottom {
+  border-top: 1px solid rgba(255,255,255,.05);
+  padding-top: 26px; display: flex;
+  justify-content: center; align-items: center; flex-wrap: wrap; gap: 12px;
+}
+.foot-bottom p { font-size: .73rem; color: #64748b; text-align: center; }
+
+
+/* ===================== RESPONSIVE ===================== */
+
+/* --- Tablet landscape / small desktop (≤1024px) --- */
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-card-wrap { display: none; }
+  .three-col, .how-grid, .audience-grid, .metric-row, .story-grid, .persp-grid { grid-template-columns: 1fr 1fr; }
+  .split { grid-template-columns: 1fr; gap: 36px; }
+  .thesis-box { grid-template-columns: 1fr; gap: 24px; padding: 36px 30px; }
+  .emp-split { grid-template-columns: 1fr; gap: 28px; }
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .gos-logo.gos-xl { font-size: 2.4rem; }
+}
+
+/* --- Tablet portrait (≤768px) --- */
+@media (max-width: 768px) {
+  section { padding: 72px 0; }
+  .wrap { padding: 0 5%; }
+  .nav-links { display: none; }
+  .burger { display: flex; }
+  .three-col, .how-grid, .audience-grid, .metric-row, .story-grid, .persp-grid { grid-template-columns: 1fr; }
+  .chip-grid, .pathway-row { grid-template-columns: 1fr; }
+  .hero-btns, .cta-btns { flex-direction: column; align-items: flex-start; }
+  .cta-btns { align-items: center; }
+  .how-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .foot-grid { grid-template-columns: 1fr; gap: 28px; }
+  .foot-bottom { flex-direction: column; text-align: center; }
+  .nowrap-desktop { white-space: normal !important; }
+  .thesis-box { padding: 28px 22px; }
+  .h-lg { font-size: clamp(1.5rem, 4vw, 2rem); }
+  .hero-stat-row { gap: 12px; }
+  .hero-sub { font-size: .95rem; }
+  .cta-section h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); }
+  .gos-logo.gos-xl { font-size: 2rem; }
+  .emp-split { padding: 24px; gap: 24px; }
+}
+
+/* --- Phone landscape / large phone (≤640px) --- */
+@media (max-width: 640px) {
+  section { padding: 60px 0; }
+  .wrap { padding: 0 4%; }
+  .h-xl { font-size: clamp(2rem, 8vw, 2.6rem); }
+  .h-lg { font-size: clamp(1.4rem, 5vw, 1.9rem); }
+  .persp-grid { grid-template-columns: 1fr; }
+  .persp-card { padding: 22px 18px; }
+  .story-grid { grid-template-columns: 1fr; }
+  .how-grid { grid-template-columns: 1fr; }
+  .metric-row { grid-template-columns: 1fr; }
+  .audience-grid { grid-template-columns: 1fr; }
+  .feat-meta { flex-wrap: wrap; gap: 8px; }
+  .hero-badge { font-size: .62rem; }
+  .grad-list { padding: 24px 20px; }
+  .emp-split { padding: 20px; }
+  .gos-logo.gos-xl { font-size: 1.7rem; }
+}
+
+/* --- Phone portrait (≤480px) --- */
+@media (max-width: 480px) {
+  section { padding: 56px 0; }
+  .wrap { padding: 0 4%; }
+  .h-xl { font-size: 2rem; }
+  .h-lg { font-size: 1.35rem; }
+  .thesis-box { padding: 22px 18px; }
+  .hero-stat-row { flex-wrap: wrap; gap: 10px; }
+  .hero-stat { min-width: 80px; }
+  .cta-section { padding: 60px 0; }
+  .cta-section h2 { font-size: 1.5rem; }
+  .cta-section p { font-size: .85rem; }
+  .three-col, .how-grid { grid-template-columns: 1fr; }
+  .prob-card, .how-card { padding: 22px 18px; }
+  .story-card { padding: 22px 18px; }
+  .metric-card { padding: 24px 18px; }
+  .gos-logo.gos-xl { font-size: 1.5rem; }
+  .foot-brand-name { margin-bottom: 12px; }
+  .how-footer { padding: 18px 20px; }
+  .persp-card { padding: 18px 16px; }
+  .btn { padding: 11px 20px; font-size: .82rem; }
+}
+
+/* ── Landscape phone orientation ── */
+@media (max-height: 500px) and (orientation: landscape) {
+  nav { height: 52px; }
+  section { padding: 40px 0; }
+  .hero-stat-row { display: none; }
+  #hero { padding-top: 60px; }
+  .cta-section { padding: 48px 0; }
+  .mob-menu { max-height: calc(100vh - 52px); overflow-y: auto; }
+}
+
+/* ── Prevent horizontal scroll on all phones ── */
+@media (max-width: 768px) {
+  .story-card, .persp-card, .how-card, .prob-card { word-break: break-word; }
+  .o-chip { font-size: .7rem; }
+  .tag { font-size: .65rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- FIX 2 & 3: GradiumOS SVG logo image definitions via CSS custom properties approach -->
+<!-- We define SVG img tags inline everywhere GradiumOS appears -->
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="provenor-logo" aria-label="Provenor">
+    <svg xmlns="http://www.w3.org/2000/svg" height="28" viewBox="0 0 196 28" fill="none">
+  <!-- PROV -->
+  <text x="0" y="22" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="24" letter-spacing="1.5" fill="#1B3FE6">PROV</text>
+  <!-- three stacked bars replacing E — wider bars matching E glyph width -->
+  <rect x="76" y="5"  width="17" height="4" rx="2" fill="#16A34A"/>
+  <rect x="76" y="12" width="17" height="4" rx="2" fill="#FBBF24"/>
+  <rect x="76" y="19" width="17" height="4" rx="2" fill="#1B3FE6"/>
+  <!-- NOR -->
+  <text x="97" y="22" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="24" letter-spacing="1.5" fill="#1B3FE6">NOR</text>
+</svg>
+  </a>  
+  <ul class="nav-links">
+    <li><a href="#institutions">Institutions</a></li>
+    <li><a href="#learners">Learners</a></li>
+    <li><a href="#employers">Employers</a></li>
+    <li><a href="https://gradiumos.provenorsystems.com" target="_blank" rel="noopener noreferrer"><span class="gos-logo gos-sm"><span class="gos-gradium">Gradium</span><span class="gos-os-wrap"><span class="gos-os">OS</span></span></span></a></li>
+    <li><a href="#stories">Stories</a></li>
+    <li><a href="#perspectives">Perspectives</a></li>
+    <li><a href="#contact" class="nav-pill">Schedule a Call</a></li>
+  </ul>
+  <button class="burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <a href="#institutions" onclick="closeMob()">Institutions</a>
+  <a href="#learners" onclick="closeMob()">Learners</a>
+  <a href="#employers" onclick="closeMob()">Employers</a>
+<a href="https://gradiumos.provenorsystems.com" target="_blank" rel="noopener noreferrer" onclick="closeMob()"><span class="gos-logo gos-sm on-light"><span class="gos-gradium">Gradium</span><span class="gos-os-wrap"><span class="gos-os">OS</span></span></span></a>
+  <a href="#stories" onclick="closeMob()">Stories</a>
+  <a href="#perspectives" onclick="closeMob()">Perspectives</a>
+  <a href="#contact" onclick="closeMob()" class="cta-mob">Schedule a Conversation →</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge">AI-Powered Employability Platform</div>
+        <h1 class="h-xl hero-h1">Engineering<br><span class="accent">Employability</span><br>Into Education</h1>
+        <p class="hero-sub">
+          <strong>Degrees certify learning.</strong><br>
+          Provenor ensures graduates are <strong>ready to perform</strong> — with structured evidence to prove it.
+        </p>
+        <div class="hero-btns">
+          <a href="#institutions" class="btn btn-blue">For Institutions →</a>
+          <a href="https://gradiumos.provenorsystems.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="display:inline-flex;align-items:center;gap:8px">Explore <span class="gos-logo gos-sm"><span class="gos-gradium">Gradium</span><span class="gos-os-wrap"><span class="gos-os">OS</span></span></span></a>
+        </div>
+      </div>
+
+      <div class="hero-card-wrap">
+        <div class="hero-card">
+          <div class="hero-card-title">How It Works</div>
+          <div class="step-row">
+            <div class="step-dot sd-blue">01</div>
+            <div>
+              <h4>Define Readiness</h4>
+              <p>Role-specific competence standards</p>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-dot sd-teal">02</div>
+            <div>
+              <h4>Cultivate Capability</h4>
+              <p>Targeted interventions + simulations</p>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-dot sd-green">03</div>
+            <div>
+              <h4>Evidence Readiness</h4>
+              <p>Credible profiles alongside the degree</p>
+            </div>
+          </div>
+          <!-- FIX 4: white-space:nowrap on the stat span prevents line break -->
+          <div class="hero-stat-row">
+            <div class="hero-stat"><strong>3</strong><span>Stakeholders</span></div>
+            <div class="hero-stat"><strong>1</strong><span>Integrated Layer</span></div>
+            <div class="hero-stat"><strong>10+</strong><span style="white-space:nowrap">Career Tracks</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="wrap">
+    <span class="eyebrow r">The Problem</span>
+    <h2 class="h-lg r d1">Learning exists.<br>Employability is still <span style="color:var(--blue)">inferred</span>.</h2>
+
+    <div class="three-col">
+      <div class="prob-card pc-blue r">
+        <div class="prob-card-who">Institutions</div>
+        <h3>Deliver curriculum —<br>not guaranteed outcomes</h3>
+        <p>Programs are built around syllabus completion, not workplace readiness.</p>
+      </div>
+      <div class="prob-card pc-amber r d1">
+        <div class="prob-card-who">Employers</div>
+        <h3>Hire on assumptions —<br>not on evidence</h3>
+        <p>Resumes and interviews don't reveal how someone performs under real constraints.</p>
+      </div>
+      <div class="prob-card pc-teal r d2">
+        <div class="prob-card-who">Learners</div>
+        <h3>Graduate uncertain —<br>not demonstrably ready</h3>
+        <p>Hard work, but no structured way to show applied capability.</p>
+      </div>
+    </div>
+
+    <div class="thesis-box r">
+      <p class="thesis-quote">
+        Employability should not be <strong>guessed</strong> after graduation.
+        It should be <strong>cultivated</strong> during learning.
+      </p>
+      <div class="thesis-right">
+        <p>Provenor integrates a structured readiness layer into academic programs — measuring, strengthening, and evidencing capability before hiring decisions are made.</p>
+        <a href="#how" class="btn btn-outline" style="margin-top:24px;display:inline-flex">See How It Works →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background:var(--surface)">
+  <div class="wrap">
+    <span class="eyebrow r">How It Works</span>
+    <h2 class="h-lg r d1">Three steps. One outcome.</h2>
+    <p style="font-size:1rem;color:var(--sub);max-width:460px;margin-top:10px;white-space:nowrap" class="r d2 nowrap-desktop">The degree stays intact. What changes is how readiness is built and proven.</p>
+
+    <div class="how-grid">
+      <div class="how-card r">
+        <div class="how-num n-blue">01</div>
+        <h3>Define Readiness</h3>
+        <p>Real IT and ITES roles are translated into structured competence standards — skills, behaviours, performance expectations.</p>
+      </div>
+      <div class="how-card r d1">
+        <div class="how-num n-teal">02</div>
+        <h3>Cultivate Capability</h3>
+        <p>Learners close specific gaps through role-aligned interventions and realistic work simulations — not generic training.</p>
+      </div>
+      <div class="how-card r d2">
+        <div class="how-num n-green">03</div>
+        <h3>Evidence Readiness</h3>
+        <p>Applied performance is captured continuously — producing a credible, evidence-backed readiness profile alongside the degree.</p>
+      </div>
+    </div>
+
+    <div class="how-footer r">
+      <p><strong>The degree remains intact.</strong> Provenor runs alongside — not instead of — your academic program.</p>
+      <a href="#institutions" class="btn btn-blue">Partner with Us →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE SERVE -->
+<section id="serve" style="background:var(--night)">
+  <div class="wrap">
+    <span class="eyebrow tl r">Who We Serve</span>
+    <h2 class="h-lg inv r d1">Built for the entire ecosystem.</h2>
+    <p style="font-size:1rem;color:var(--muted);max-width:440px;margin-top:10px;white-space:nowrap" class="r d2 nowrap-desktop">One integrated model. Three distinct stakeholders. Everyone benefits.</p>
+
+    <div class="audience-grid">
+      <!-- FIX 1: SVG icons replace emoji to prevent dark rendering issues on some OS/devices -->
+      <a href="#institutions" class="aud-card r">
+        <div class="aud-icon">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="12" width="22" height="13" rx="1.5" stroke="#94a3b8" stroke-width="1.8" fill="none"/>
+            <path d="M1 12L14 3L27 12" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <rect x="10" y="18" width="8" height="7" rx="1" stroke="#94a3b8" stroke-width="1.6" fill="none"/>
+            <rect x="6" y="15" width="4" height="4" rx="0.8" stroke="#94a3b8" stroke-width="1.4" fill="none"/>
+            <rect x="18" y="15" width="4" height="4" rx="0.8" stroke="#94a3b8" stroke-width="1.4" fill="none"/>
+          </svg>
+        </div>
+        <h3>Institutions</h3>
+        <p>Differentiate on measurable employability. No curriculum disruption — just evidence-backed outcomes.</p>
+        <span class="aud-arrow">For Institutions →</span>
+      </a>
+      <a href="#learners" class="aud-card r d1">
+        <div class="aud-icon">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 4L26 10V11L14 17L2 11V10L14 4Z" stroke="#94a3b8" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+            <path d="M6 13.5V19.5C6 19.5 8.5 23 14 23C19.5 23 22 19.5 22 19.5V13.5" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <path d="M26 11V17" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Learners</h3>
+        <p>Don't just earn a degree. Graduate with demonstrated capability and a readiness profile employers can trust.</p>
+        <span class="aud-arrow">For Learners →</span>
+      </a>
+      <a href="#employers" class="aud-card r d2">
+        <div class="aud-icon">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="10" width="22" height="15" rx="2" stroke="#94a3b8" stroke-width="1.8" fill="none"/>
+            <path d="M9 10V8C9 6.34 10.34 5 12 5H16C17.66 5 19 6.34 19 8V10" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <path d="M3 17H25" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="14" cy="17" r="2" stroke="#94a3b8" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <h3>Employers</h3>
+        <p>Hire on evidence, not intuition. Provenor graduates carry applied performance data — not just credentials.</p>
+        <span class="aud-arrow">For Employers →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOR INSTITUTIONS -->
+<section id="institutions">
+  <div class="wrap">
+    <span class="eyebrow r">For Institutions</span>
+    <h2 class="h-lg r d1">Deliver employable graduates — with proof.</h2>
+    <p style="font-size:1rem;color:var(--sub);max-width:480px;margin-top:10px;white-space:nowrap" class="r d2 nowrap-desktop">No curriculum replacement. No regulatory disruption. Measurable outcome improvement.</p>
+
+    <div class="split" style="margin-top:52px">
+      <div class="r">
+        <p class="section-label">What we embed alongside your program:</p>
+        <ul class="check-list">
+          <li>Readiness gap diagnostics across cohorts</li>
+          <li>Targeted capability interventions</li>
+          <li>Structured work simulations</li>
+          <li>Applied performance capture</li>
+          <li>Evidence-backed readiness profiles</li>
+        </ul>
+
+        <div style="margin-top:32px">
+          <p class="section-label">Two pathways. Clear comparison.</p>
+          <div class="pathway-row">
+            <div class="pt">
+              <div class="pt-label">Standard Track</div>
+              <h4>Academic program as-is</h4>
+            </div>
+            <div class="pt active">
+              <div class="pt-label">+ Provenor</div>
+              <h4>Academic + Employability Augmentation</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="r d1">
+        <div class="grad-list">
+          <div class="grad-list-title">Institutional benefits:</div>
+          <div class="grad-item">
+            <div class="icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 11l5 5L18 6" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <p>Stronger placement outcomes</p>
+          </div>
+          <div class="grad-item">
+            <div class="icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#94a3b8" stroke-width="1.6" fill="none"/><path d="M8 11l2 2 4-4" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <p>Employer confidence uplift</p>
+          </div>
+          <div class="grad-item">
+            <div class="icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="#94a3b8" stroke-width="1.6" fill="none"/><path d="M7 11h8M7 7h8M7 15h5" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <p>Cohort-level diagnostics</p>
+          </div>
+          <div class="grad-item">
+            <div class="icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3v4M11 15v4M3 11h4M15 11h4" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/><circle cx="11" cy="11" r="3" stroke="#94a3b8" stroke-width="1.6" fill="none"/></svg></div>
+            <p>No faculty workload added</p>
+          </div>
+          <div class="grad-item">
+            <div class="icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 17l3-3 3 2 5-7 3 3" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect x="2" y="3" width="18" height="16" rx="2" stroke="#94a3b8" stroke-width="1.5" fill="none"/></svg></div>
+            <p>Evidence-backed reporting</p>
+          </div>
+          <div class="grad-item" style="border-bottom:none">
+            <div class="icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 4v14M4 11h14" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/><circle cx="11" cy="11" r="8" stroke="#94a3b8" stroke-width="1.4" fill="none" stroke-dasharray="3 2"/></svg></div>
+            <p>Measurable cohort delta</p>
+          </div>
+          <a href="#contact" class="btn btn-blue" style="margin-top:24px;width:100%;justify-content:center">Request Institutional Consultation →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR LEARNERS -->
+<section id="learners" style="background:var(--surface)">
+  <div class="wrap">
+    <span class="eyebrow tl r">For Learners</span>
+    <h2 class="h-lg r d1">Don't just earn a degree.<br>Prove you're ready.</h2>
+    <p style="font-size:1rem;color:var(--sub);max-width:460px;margin-top:10px" class="r d2">Choose the Provenor-integrated pathway at your institution.</p>
+
+    <div class="split" style="margin-top:52px">
+      <div class="r">
+        <p class="section-label">The gap you feel is real — but fixable.</p>
+        <p style="font-size:.875rem;color:var(--sub);line-height:1.75">You study hard. You prepare for interviews. Yet readiness still feels uncertain. That uncertainty comes from <em>limited applied practice</em> — not lack of intelligence.</p>
+
+        <p class="section-label" style="margin-top:28px">What Provenor adds:</p>
+        <ul class="check-list">
+          <li>Role-specific readiness diagnostics</li>
+          <li>Targeted gap strengthening</li>
+          <li>Realistic work simulations</li>
+          <li>Structured progression pathways</li>
+        </ul>
+        <p style="margin-top:18px;font-size:.875rem;color:var(--teal);font-weight:600">You don't guess your readiness. You watch it improve.</p>
+      </div>
+
+      <div class="r d1">
+        <div class="grad-list">
+          <div class="grad-list-title">You graduate with:</div>
+          <!-- FIX 1: SVG icons replace emoji chars -->
+          <div class="grad-item">
+            <div class="icon">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="2" width="16" height="18" rx="2" stroke="#94a3b8" stroke-width="1.6" fill="none"/><path d="M7 7h8M7 11h8M7 15h5" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <p>Your degree — fully intact</p>
+          </div>
+          <div class="grad-item">
+            <div class="icon">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#94a3b8" stroke-width="1.6" fill="none"/><path d="M11 7v4l3 2" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </div>
+            <p>Clarity on your strengths and role fit</p>
+          </div>
+          <div class="grad-item">
+            <div class="icon">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 11l5 5L18 6" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p>Demonstrated applied capability</p>
+          </div>
+          <div class="grad-item">
+            <div class="icon">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 17l3-3 3 2 5-7 3 3" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect x="2" y="3" width="18" height="16" rx="2" stroke="#94a3b8" stroke-width="1.5" fill="none"/></svg>
+            </div>
+            <p>Stronger interview confidence</p>
+          </div>
+          <div class="grad-item">
+            <div class="icon">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="9" r="4" stroke="#94a3b8" stroke-width="1.6" fill="none"/><path d="M4 19c0-3.31 3.13-6 7-6s7 2.69 7 6" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round" fill="none"/><path d="M15 6l1.5 1.5L19 4" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p>An evidence-backed readiness profile</p>
+          </div>
+          <a href="#contact" class="btn btn-indigo" style="margin-top:24px;width:100%;justify-content:center">Explore at Your Institution →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR EMPLOYERS -->
+<section id="employers">
+  <div class="wrap">
+    <span class="eyebrow gn r">For Employers</span>
+    <h2 class="h-lg r d1">Hire graduates who are<br>actually work ready.</h2>
+    <p style="font-size:1rem;color:var(--sub);max-width:480px;margin-top:10px;white-space:nowrap" class="r d2 nowrap-desktop">Move from inference-based hiring to evidence-backed evaluation.</p>
+
+    <div class="metric-row">
+      <div class="metric-card mc-blue r">
+        <h3>Reduced Retraining</h3>
+        <p>Provenor graduates have already closed measurable readiness gaps before they arrive.</p>
+      </div>
+      <div class="metric-card mc-teal r d1">
+        <h3>Faster Ramp-Up</h3>
+        <p>Role-aligned simulations mean graduates understand real workplace constraints from day one.</p>
+      </div>
+      <div class="metric-card mc-night r d2">
+        <h3>Higher Signal Confidence</h3>
+        <p>Evidence-backed profiles replace guesswork. Evaluate demonstrated capability — not credentials.</p>
+      </div>
+    </div>
+
+    <div class="emp-split r">
+      <div>
+        <p class="section-label">The hiring signal problem:</p>
+        <p style="font-size:.875rem;color:var(--sub);line-height:1.75">Resumes show education. Interviews test articulation. Neither consistently reveals how someone performs under real constraints. Early-stage hiring risk stays high.</p>
+      </div>
+      <div>
+        <p class="section-label">Provenor talent is different:</p>
+        <ul class="check-list">
+          <li>Role-aligned competence pathways completed</li>
+          <li>Measurable readiness gaps closed</li>
+          <li>Structured work simulations performed</li>
+          <li>Evidence-backed profile attached</li>
+        </ul>
+        <a href="#contact" class="btn btn-blue" style="margin-top:22px;display:inline-flex">Request Employer Consultation →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GRADIUMOS -->
+<section id="gradiumos" style="background:var(--night)">
+  <div class="wrap">
+    <!-- Eyebrow: The Platform -->
+    <span class="eyebrow in r" style="margin-bottom:14px">The Platform</span>
+    <!-- Large GradiumOS logo - single instance -->
+    <div class="r d1" style="margin-bottom:8px">
+      <span class="gos-logo gos-xl"><span class="gos-gradium">Gradium</span><span class="gos-os-wrap"><span class="gos-os">OS</span></span></span>
+    </div>
+    <h2 class="h-lg inv r d1" style="margin-top:8px">The AI-powered talent<br>operating system.</h2>
+    <p style="font-size:1rem;color:var(--muted);max-width:480px;margin-top:10px" class="r d2">Operationalizing employability at scale — built for institutional deployment across cohorts and tracks.</p>
+    <div style="display:flex;gap:14px;margin-top:26px;flex-wrap:wrap" class="r d2">
+      <a href="#contact" class="btn btn-indigo">Request a Demo →</a>
+      <a href="https://app.provenorsystems.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Login Now</a>
+    </div>
+
+    <div class="split" style="margin-top:60px;align-items:stretch">
+      <div class="engine-list r" style="display:flex;flex-direction:column;gap:10px;margin-top:0;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:24px">
+        <div class="engine-item">
+          <span class="e-num">01</span>
+          <div><h4>Role Decomposition Engine</h4><p>Breaks live IT/ITES roles into measurable competence standards — skills, behaviours, and expectations.</p></div>
+        </div>
+        <div class="engine-item">
+          <span class="e-num">02</span>
+          <div><h4>Readiness Diagnostics</h4><p>Assesses learners against standards. Makes gap visibility quantifiable across individuals, cohorts, and tracks.</p></div>
+        </div>
+        <div class="engine-item">
+          <span class="e-num">03</span>
+          <div><h4>Targeted Interventions</h4><p>Prescribes structured activities to close specific gaps. No generic training — capability-focused only.</p></div>
+        </div>
+        <div class="engine-item">
+          <span class="e-num">04</span>
+          <div><h4>Work Simulations</h4><p>Role-aligned simulations under real constraints — time pressure, ambiguity, and collaboration. Applied competence is observed.</p></div>
+        </div>
+        <div class="engine-item">
+          <span class="e-num">05</span>
+          <div><h4>Evidence Ledger</h4><p>Every session contributes to progression tracking, competence validation, and evidence-backed profiles. Demonstration replaces declaration.</p></div>
+        </div>
+      </div>
+
+      <div class="r d1" style="display:flex;flex-direction:column;gap:16px">
+        <div class="why-panel" style="flex:1">
+          <h3>Why It Matters Now</h3>
+          <div class="why-row"><div class="why-dot"></div><p>AI is raising baseline productivity expectations — graduates must demonstrate readiness earlier than ever.</p></div>
+          <div class="why-row"><div class="why-dot"></div><p>Employers are shrinking hiring risk tolerance. Evidence replaces assumptions at every stage.</p></div>
+          <div class="why-row"><div class="why-dot"></div><p>Institutions need differentiation beyond placement stats. <span class="gos-logo gos-sm"><span class="gos-gradium">Gradium</span><span class="gos-os-wrap"><span class="gos-os">OS</span></span></span> delivers measurable delta.</p></div>
+        </div>
+
+        <div class="diff-panel" style="margin-top:0">
+          <div class="diff-panel-title">What makes it different</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="chip dark">Competence standardization layer</div>
+            <div class="chip dark">Diagnostic engine</div>
+            <div class="chip dark">Intervention framework</div>
+            <div class="chip dark">Simulation engine + Evidence ledger</div>
+            <div class="chip dark">Progression analytics</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section id="stories" style="background:var(--surface)">
+  <div class="wrap">
+    <span class="eyebrow r">Stories</span>
+    <h2 class="h-lg r d1">Employability engineering in action.</h2>
+    <p style="font-size:1rem;color:var(--sub);margin-top:10px" class="r d2">How institutions, learners, and employers experience Provenor.</p>
+
+    <div class="story-grid">
+      <div class="story-card r">
+        <span class="tag tag-blue">Institutional Spotlight</span>
+        <h3>SRM — CSE-AI Pilot · Q2 2026</h3>
+        <p>A Semester 5 CSE-AI cohort of 50 students. Eight weeks. A structured augmentation layer running alongside the academic program. Measurable delta in progress.</p>
+        <div class="outcome-row">
+          <span class="o-chip">🔵 Pilot in progress</span>
+          <span class="o-chip">Results: Q3 2026</span>
+        </div>
+      </div>
+      <div class="story-card r d1">
+        <span class="tag tag-teal">Learner Journey</span>
+        <h3>50 students. One cohort. One semester.</h3>
+        <p>The pilot cohort receives a personalised gap brief on Day 1, tracks capability movement across 8 clusters, and graduates with an Evidence-Backed Readiness Profile.</p>
+        <div class="outcome-row">
+          <span class="o-chip">🔵 Cohort active</span>
+          <span class="o-chip">Profiles: Q3 2026</span>
+        </div>
+      </div>
+      <div class="story-card r d2">
+        <span class="tag tag-amber">Employer Signal</span>
+        <h3>Evidence before the offer stage</h3>
+        <p>Employer engagement opens post-pilot. Provenor-integrated graduates will carry CRB profiles and simulation performance data — evaluated capability, not inferred readiness.</p>
+        <div class="outcome-row">
+          <span class="o-chip">🟡 Opening Q3 2026</span>
+          <span class="o-chip">Interest: contact us</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSPECTIVES -->
+<section id="perspectives">
+  <div class="wrap">
+    <span class="eyebrow r">Perspectives</span>
+    <h2 class="h-lg r d1">Rethinking employability.</h2>
+    <p style="font-size:1rem;color:var(--sub);max-width:440px;margin-top:10px;white-space:nowrap" class="r d2 nowrap-desktop">Employability is a measurable capability outcome — not a placement statistic.</p>
+
+    <div class="persp-grid">
+      <div class="persp-card r" onclick="openPerspectivesPage()" style="cursor:pointer">
+        <div class="persp-cat">Employability</div>
+        <h4>Why Curriculum Completion Is Not Enough</h4>
+        <p>The gap between what institutions teach and what employers need — and how to close it structurally.</p>
+      </div>
+      <div class="persp-card r d1" onclick="openPerspectivesPage()" style="cursor:pointer">
+        <div class="persp-cat">Future of Work</div>
+        <h4>AI &amp; Entry-Level Work: What Changes Now</h4>
+        <p>AI raises baseline expectations. What does this mean for new graduates in 2025+?</p>
+      </div>
+      <div class="persp-card r d2" onclick="openPerspectivesPage()" style="cursor:pointer">
+        <div class="persp-cat">Education Gap</div>
+        <h4>Curriculum vs Capability: The Gap</h4>
+        <p>Academic programs build knowledge. Employers need applied capability. The space between is where Provenor operates.</p>
+      </div>
+      <div class="persp-card r" onclick="openPerspectivesPage()" style="cursor:pointer">
+        <div class="persp-cat">Campus Hiring</div>
+        <h4>How Campus Hiring Is Evolving</h4>
+        <p>From credential-based to evidence-based — the dynamics reshaping campus recruitment.</p>
+      </div>
+      <div class="persp-card r d1" onclick="openPerspectivesPage()" style="cursor:pointer">
+        <div class="persp-cat">Framework</div>
+        <h4>The Provenor Framework: Deep Dive</h4>
+        <p>Define, Cultivate, Evidence — three steps that transform readiness from assumption to demonstration.</p>
+      </div>
+      <div class="persp-card r d2" onclick="openPerspectivesPage()" style="cursor:pointer">
+        <div class="persp-cat">AI &amp; Education</div>
+        <h4><span class="gos-logo gos-sm on-light"><span class="gos-gradium">Gradium</span><span class="gos-os-wrap"><span class="gos-os">OS</span></span></span> and Readiness at Scale</h4>
+        <p>How AI-powered talent systems make employability measurable across entire institutions.</p>
+      </div>
+    </div>
+    <div style="margin-top:32px;text-align:center">
+      <button onclick="openPerspectivesPage()" class="btn btn-blue" style="font-size:.9rem;padding:14px 32px">
+        View All Perspectives →
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <div class="wrap" style="position:relative;z-index:1">
+    <span class="eyebrow" style="color:rgba(255,255,255,.5);display:block;text-align:center;margin-bottom:14px">Partner with Provenor</span>
+    <h2>Ready to engineer<br>employability into your program?</h2>
+    <p>Whether you're an institution, employer, or learner — there's a structured path to demonstrable readiness.</p>
+    <div class="cta-btns">
+      <a href="mailto:hello@provenorsystems.com" class="btn btn-white">Schedule a Conversation</a>
+      <a href="https://gradiumos.provenorsystems.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="display:inline-flex;align-items:center;gap:8px">Explore <span class="gos-logo gos-sm on-blue"><span class="gos-gradium">Gradium</span><span class="gos-os-wrap"><span class="gos-os">OS</span></span></span></a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="foot-brand-name">
+          <span class="provenor-logo" aria-label="Provenor">
+            <svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 0 196 28" fill="none">
+  <text x="0" y="22" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="24" letter-spacing="1" fill="#ffffff">PROV</text>
+  <rect x="76" y="5"  width="17" height="4" rx="2" fill="#16A34A"/>
+  <rect x="76" y="12" width="17" height="4" rx="2" fill="#FBBF24"/>
+  <rect x="76" y="19" width="17" height="4" rx="2" fill="#1B3FE6"/>
+  <text x="97" y="22" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="24" letter-spacing="1" fill="#ffffff">NOR</text>
+</svg>
+          </span>
+        </div>
+        <p>Engineering employability into education.<br>An AI-powered readiness augmentation<br>layer for UGC-approved programs.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Platform</h5>
+        <ul>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="https://gradiumos.provenorsystems.com" target="_blank" rel="noopener noreferrer"><span class="gos-logo gos-sm"><span class="gos-gradium">Gradium</span><span class="gos-os-wrap"><span class="gos-os">OS</span></span></span></a></li>
+          <li><a href="#stories">Stories</a></li>
+          <li><a href="#perspectives">Perspectives</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Audience</h5>
+        <ul>
+          <li><a href="#institutions">Institutions</a></li>
+          <li><a href="#learners">Learners</a></li>
+          <li><a href="#employers">Employers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="#contact">Schedule a Call</a></li>
+          <li><a href="#contact">Request a Demo</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 Provenor Systems. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav shadow on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10));
+
+  // Mobile menu
+  const burger = document.getElementById('burger');
+  const mobMenu = document.getElementById('mobMenu');
+  burger.addEventListener('click', () => mobMenu.classList.toggle('open'));
+  function closeMob() { mobMenu.classList.remove('open'); }
+  document.addEventListener('click', e => {
+    if (!burger.contains(e.target) && !mobMenu.contains(e.target)) closeMob();
+  });
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.r').forEach(el => io.observe(el));
+
+  // Nav active state — highlight nav link for currently visible section
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section[id], div[id]');
+
+  const sio = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.getAttribute('id');
+        navLinks.forEach(link => {
+          link.classList.remove('active-nav');
+          if (link.getAttribute('href') === '#' + id) {
+            link.classList.add('active-nav');
+          }
+        });
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-60px 0px -40% 0px' });
+
+  sections.forEach(sec => sio.observe(sec));
+
+  // Smooth scroll for all anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+         const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        closeMob();
+      }
+    });
+  });
+</script>
+
+<!-- PERSPECTIVES FULL-PAGE OVERLAY -->
+<div id="perspectivesOverlay" style="display:none;position:fixed;inset:0;z-index:9999;background:#fff;overflow-y:auto;overflow-x:hidden;width:100%;box-sizing:border-box;">
+<style>
+.persp-overlay-nav {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(255,255,255,0.97); backdrop-filter: blur(16px);
+  border-bottom: 1px solid #CBD5E1;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 6%; height: 68px;
+  width: 100%; box-sizing: border-box;
+}
+.persp-close-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: none; border: 1.5px solid #CBD5E1; border-radius: 8px;
+  padding: 8px 16px; font-family: 'Inter', sans-serif;
+  font-size: .82rem; font-weight: 600; color: #475569;
+  cursor: pointer; transition: all .2s;
+}
+.persp-close-btn:hover { border-color: #1B3FE6; color: #1B3FE6; }
+.persp-hero-section {
+  background: #0F172A; padding: 80px 0 64px; position: relative; overflow: hidden;
+  width: 100%; box-sizing: border-box;
+}
+.persp-hero-section::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 70% 50%, rgba(99,102,241,.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.persp-wrap { max-width: 1160px; margin: 0 auto; padding: 0 6%; position: relative; width: 100%; box-sizing: border-box; }
+.persp-eyebrow {
+  display: inline-block; font-size: .65rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.7); background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15); padding: 5px 14px;
+  border-radius: 100px; margin-bottom: 20px;
+}
+.persp-h1 {
+  font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 900; color: #fff;
+  letter-spacing: -.03em; line-height: 1.1; max-width: 680px; margin-bottom: 16px;
+}
+.persp-sub { font-size: 1rem; color: #94a3b8; max-width: 500px; line-height: 1.7; margin-bottom: 28px; }
+.persp-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+.persp-tag {
+  font-size: .73rem; font-weight: 600; padding: 6px 14px;
+  border-radius: 100px; border: 1px solid rgba(255,255,255,.15);
+  color: #94a3b8; background: rgba(255,255,255,.05);
+  cursor: pointer; transition: all .2s;
+}
+.persp-tag:hover, .persp-tag.active { background: #1B3FE6; color: #fff; border-color: #1B3FE6; }
+.featured-section-p { padding: 64px 0 0; }
+.featured-label-p {
+  font-size: .63rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: #1B3FE6; margin-bottom: 20px;
+}
+.featured-card-p {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  background: #0F172A; border-radius: 20px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,.06); cursor: pointer;
+}
+.featured-visual-p {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #1e3a5f 100%);
+  min-height: 320px; display: flex; align-items: center; justify-content: center;
+  padding: 48px; position: relative; overflow: hidden;
+}
+.featured-visual-p::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 30% 70%, rgba(99,102,241,.35) 0%, transparent 60%);
+}
+.featured-vis-quote {
+  font-size: 1.35rem; font-weight: 800; color: #fff;
+  line-height: 1.35; letter-spacing: -.02em; position: relative; z-index: 1; text-align: center;
+}
+.featured-vis-quote span { color: #a5b4fc; }
+.featured-body-p { padding: 44px 40px; display: flex; flex-direction: column; justify-content: center; }
+.feat-cat-p { font-size: .63rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #6366F1; margin-bottom: 12px; }
+.featured-body-p h2 { font-size: 1.5rem; font-weight: 800; color: #fff; letter-spacing: -.03em; line-height: 1.25; margin-bottom: 14px; }
+.featured-body-p .excerpt { font-size: .88rem; color: #94a3b8; line-height: 1.75; margin-bottom: 24px; }
+.feat-meta-p { display: flex; align-items: center; gap: 14px; }
+.feat-meta-p .author { font-size: .78rem; font-weight: 600; color: rgba(255,255,255,.7); }
+.feat-meta-p .read-time { font-size: .73rem; color: #94a3b8; }
+.feat-meta-p .divider { width: 1px; height: 14px; background: rgba(255,255,255,.15); }
+.read-btn-p {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #6366F1; color: #fff; padding: 11px 22px;
+  border-radius: 100px; font-family: 'Inter', sans-serif;
+  font-size: .82rem; font-weight: 600; text-decoration: none;
+  transition: background .2s, transform .15s; margin-top: 24px; align-self: flex-start;
+  border: none; cursor: pointer;
+}
+.read-btn-p:hover { background: #4f46e5; transform: translateY(-1px); }
+.posts-section-p { padding: 56px 0 80px; }
+.posts-grid-p { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.post-card-p {
+  border: 1px solid #CBD5E1; border-radius: 16px; overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  cursor: pointer; text-decoration: none; color: inherit; background: #fff;
+}
+.post-card-p:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(2,6,23,.1); border-color: rgba(27,63,230,.3); }
+.card-visual-p { height: 150px; display: flex; align-items: center; justify-content: center; font-size: 2.4rem; position: relative; overflow: hidden; }
+.cv-p1 { background: linear-gradient(135deg, #1e3a5f 0%, #1e1b4b 100%); }
+.cv-p2 { background: linear-gradient(135deg, #0f2b1f 0%, #14532d 100%); }
+.cv-p3 { background: linear-gradient(135deg, #1c1400 0%, #451a03 100%); }
+.cv-p4 { background: linear-gradient(135deg, #1e1b4b 0%, #2e1065 100%); }
+.cv-p5 { background: linear-gradient(135deg, #0c1a2e 0%, #1e3a5f 100%); }
+.icon-badge-p { width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; background: rgba(255,255,255,.1); backdrop-filter: blur(8px); }
+.card-body-p { padding: 22px 22px 24px; flex: 1; display: flex; flex-direction: column; }
+.card-cat-p { font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #1B3FE6; margin-bottom: 9px; }
+.card-body-p h3 { font-size: .93rem; font-weight: 700; color: #020617; line-height: 1.4; margin-bottom: 9px; letter-spacing: -.01em; }
+.card-body-p p { font-size: .8rem; color: #475569; line-height: 1.65; flex: 1; }
+.card-footer-p { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding-top: 12px; border-top: 1px solid #CBD5E1; }
+.card-meta-p { font-size: .72rem; color: #94a3b8; }
+.card-arrow-p { width: 26px; height: 26px; border-radius: 50%; background: #F1F5F9; display: flex; align-items: center; justify-content: center; transition: background .2s; }
+.post-card-p:hover .card-arrow-p { background: #1B3FE6; }
+.post-card-p:hover .card-arrow-p svg path { stroke: #fff; }
+/* Article modal inside overlay */
+.persp-article-overlay {
+  display: none; position: fixed; inset: 0; z-index: 10000;
+  background: rgba(2,6,23,.75); backdrop-filter: blur(6px);
+  padding: 40px 20px; overflow-y: auto;
+}
+.persp-article-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+.persp-article-modal {
+  background: #fff; border-radius: 20px; max-width: 760px; width: 100%;
+  padding: 56px 60px; position: relative; margin: auto;
+}
+.persp-modal-close {
+  position: absolute; top: 20px; right: 24px; width: 36px; height: 36px;
+  border-radius: 50%; border: 1px solid #CBD5E1; background: #F1F5F9;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: #475569; transition: all .2s;
+  font-family: 'Inter', sans-serif;
+}
+.persp-modal-close:hover { background: #020617; color: #fff; border-color: #020617; }
+.persp-modal-cat { font-size: .63rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #1B3FE6; margin-bottom: 14px; }
+.persp-article-modal h1 { font-size: 1.75rem; font-weight: 900; letter-spacing: -.03em; line-height: 1.2; color: #020617; margin-bottom: 14px; }
+.persp-article-meta { font-size: .78rem; color: #94a3b8; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #CBD5E1; }
+.persp-article-body { font-size: .95rem; color: #334155; line-height: 1.85; }
+.persp-article-body h2 { font-size: 1.15rem; font-weight: 700; color: #020617; margin: 36px 0 14px; letter-spacing: -.02em; }
+.persp-article-body p { margin-bottom: 18px; }
+.persp-article-body ul { padding-left: 22px; margin-bottom: 18px; }
+.persp-article-body ul li { margin-bottom: 8px; }
+.persp-article-body blockquote { border-left: 3px solid #1B3FE6; padding: 14px 22px; margin: 28px 0; background: #F1F5F9; border-radius: 0 8px 8px 0; font-style: italic; color: #475569; }
+/* === Perspectives overlay responsive === */
+
+/* Tablet landscape (≤1024px) */
+@media (max-width: 1024px) {
+  .featured-card-p { grid-template-columns: 1fr; }
+  .featured-visual-p { min-height: 220px; padding: 36px; }
+  .featured-vis-quote { font-size: 1.15rem; }
+  .featured-body-p { padding: 36px 32px; }
+  .featured-body-p h2 { font-size: 1.3rem; }
+  .posts-grid-p { grid-template-columns: 1fr 1fr; gap: 18px; }
+  .persp-hero-section { padding: 60px 0 48px; }
+}
+
+/* Tablet portrait (≤768px) */
+@media (max-width: 768px) {
+  .persp-overlay-nav { padding: 0 5%; height: 60px; }
+  .persp-hero-section { padding: 50px 0 40px; }
+  .persp-wrap { padding: 0 5%; }
+  .persp-h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); }
+  .persp-sub { font-size: .92rem; }
+  .persp-tags { gap: 8px; }
+  .persp-tag { font-size: .68rem; padding: 5px 12px; }
+  .featured-section-p { padding: 48px 0 0; }
+  .featured-card-p { grid-template-columns: 1fr; }
+  .featured-visual-p { min-height: 180px; padding: 28px; }
+  .featured-vis-quote { font-size: 1rem; }
+  .featured-body-p { padding: 28px 24px; }
+  .featured-body-p h2 { font-size: 1.15rem; }
+  .posts-section-p { padding: 40px 0 60px; }
+  .posts-grid-p { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .persp-article-modal { padding: 40px 32px; }
+  .persp-article-modal h1 { font-size: 1.4rem; }
+  /* Perspectives overlay footer */
+  #perspectivesOverlay .foot-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+}
+
+/* Phone landscape & small tablet (≤640px) */
+@media (max-width: 640px) {
+  .persp-overlay-nav { padding: 0 4%; height: 56px; }
+  .persp-close-btn { font-size: .75rem; padding: 6px 12px; }
+  .persp-hero-section { padding: 44px 0 36px; }
+  .persp-wrap { padding: 0 4%; }
+  .persp-h1 { font-size: clamp(1.4rem, 6vw, 2rem); }
+  .persp-tags { gap: 6px; }
+  .featured-section-p { padding: 36px 0 0; }
+  .featured-visual-p { min-height: 160px; padding: 24px; }
+  .featured-vis-quote { font-size: .92rem; }
+  .posts-grid-p { grid-template-columns: 1fr; gap: 14px; }
+  .posts-section-p { padding: 32px 0 48px; }
+  .persp-article-overlay { padding: 20px 12px; }
+  .persp-article-modal { padding: 32px 20px; border-radius: 14px; }
+  .persp-article-modal h1 { font-size: 1.25rem; }
+  .persp-article-body { font-size: .88rem; }
+  .persp-article-body h2 { font-size: 1rem; margin: 24px 0 10px; }
+  .read-btn-p { font-size: .78rem; padding: 9px 18px; }
+  .feat-meta-p { flex-wrap: wrap; gap: 8px; }
+  #perspectivesOverlay .foot-grid { grid-template-columns: 1fr; gap: 24px; }
+  #perspectivesOverlay footer { padding: 48px 0 24px; }
+}
+
+/* Phone portrait (≤480px) */
+@media (max-width: 480px) {
+  .persp-overlay-nav { height: 52px; }
+  .persp-close-btn { font-size: .72rem; padding: 5px 10px; gap: 5px; }
+  .persp-hero-section { padding: 40px 0 32px; }
+  .persp-h1 { font-size: clamp(1.3rem, 7vw, 1.8rem); margin-bottom: 12px; }
+  .persp-sub { font-size: .85rem; margin-bottom: 20px; }
+  .persp-eyebrow { font-size: .58rem; padding: 4px 10px; }
+  .featured-section-p { padding: 28px 0 0; }
+  .featured-visual-p { min-height: 140px; padding: 20px; }
+  .featured-vis-quote { font-size: .85rem; }
+  .featured-body-p { padding: 22px 18px; }
+  .featured-body-p h2 { font-size: 1rem; }
+  .featured-body-p .excerpt { font-size: .8rem; }
+  .feat-cat-p { font-size: .58rem; }
+  .posts-section-p { padding: 28px 0 40px; }
+  .card-visual-p { height: 120px; }
+  .icon-badge-p { width: 48px; height: 48px; font-size: 1.4rem; }
+  .card-body-p { padding: 16px 16px 18px; }
+  .card-body-p h3 { font-size: .85rem; }
+  .card-body-p p { font-size: .75rem; }
+  .persp-article-overlay { padding: 16px 8px; }
+  .persp-article-modal { padding: 28px 16px; border-radius: 12px; }
+  .persp-modal-close { top: 14px; right: 14px; width: 30px; height: 30px; font-size: .9rem; }
+  .persp-article-modal h1 { font-size: 1.1rem; }
+  .persp-article-body { font-size: .85rem; line-height: 1.75; }
+  .persp-article-body blockquote { padding: 10px 16px; }
+  #perspectivesOverlay footer { padding: 40px 0 20px; }
+  #perspectivesOverlay .foot-grid { grid-template-columns: 1fr; gap: 20px; padding-bottom: 32px; }
+  #perspectivesOverlay .foot-bottom { padding: 16px 0; }
+}
+
+@media (max-width: 360px) {
+  .persp-h1 { font-size: 1.2rem; }
+  .persp-article-modal { padding: 24px 12px; }
+  .persp-article-modal h1 { font-size: 1rem; }
+  .persp-article-body { font-size: .82rem; }
+  .persp-close-btn { font-size: .68rem; padding: 4px 8px; }
+  .posts-grid-p { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="persp-overlay-nav">
+  <a href="#hero" class="provenor-logo" aria-label="Provenor" onclick="closePerspectivesPage(); return false;" style="cursor:pointer;">
+    <svg xmlns="http://www.w3.org/2000/svg" height="28" viewBox="0 0 196 28" fill="none">
+      <text x="0" y="22" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="24" letter-spacing="-1" fill="#1B3FE6">PROV</text>
+      <rect x="76" y="5"  width="17" height="4" rx="2" fill="#16A34A"/>
+      <rect x="76" y="12" width="17" height="4" rx="2" fill="#FBBF24"/>
+      <rect x="76" y="19" width="17" height="4" rx="2" fill="#1B3FE6"/>
+      <text x="97" y="22" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="24" letter-spacing="-1" fill="#1B3FE6">NOR</text>
+    </svg>
+  </a>
+  <button class="persp-close-btn" onclick="closePerspectivesPage()">
+    ← Back to Provenor
+  </button>
+</div>
+
+<div class="persp-hero-section">
+  <div class="persp-wrap">
+    <span class="persp-eyebrow">Perspectives</span>
+    <h1 class="persp-h1">Thought leadership on employability, education, and the future of work.</h1>
+    <p class="persp-sub">Whitepapers, blogs, and frameworks from the team building India's employability infrastructure.</p>
+    <div class="persp-tags">
+      <span class="persp-tag active" onclick="filterPersp(this,'all')">All</span>
+      <span class="persp-tag" onclick="filterPersp(this,'employability')">Employability</span>
+      <span class="persp-tag" onclick="filterPersp(this,'future')">Future of Work</span>
+      <span class="persp-tag" onclick="filterPersp(this,'institutions')">Institutions</span>
+      <span class="persp-tag" onclick="filterPersp(this,'ai')">AI &amp; Education</span>
+      <span class="persp-tag" onclick="filterPersp(this,'frameworks')">Frameworks</span>
+    </div>
+  </div>
+</div>
+
+<div class="featured-section-p">
+  <div class="persp-wrap">
+    <div class="featured-label-p">Featured Article</div>
+    <div class="featured-card-p" onclick="openPerspArticle('featured')">
+      <div class="featured-visual-p">
+        <div class="featured-vis-quote">"Curriculum completion is a <span>proxy metric</span> — not a readiness signal."</div>
+      </div>
+      <div class="featured-body-p">
+        <div class="feat-cat-p">Employability · Whitepaper</div>
+        <h2>Why Curriculum Completion Is Not Enough: The Readiness Gap in Indian Higher Education</h2>
+        <p class="excerpt">India produces 1.5 million engineers annually. Yet employers cite readiness as their top hiring challenge. The gap between what institutions certify and what employers need is structural — and fixable.</p>
+        <div class="feat-meta-p">
+          <span class="author">Provenor Research</span>
+          <span class="divider"></span>
+          <span class="read-time">12 min read</span>
+        </div>
+        <button class="read-btn-p" onclick="openPerspArticle('featured'); event.stopPropagation();">
+          Read article
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="posts-section-p">
+  <div class="persp-wrap">
+    <h2 style="font-size:1.4rem;font-weight:800;letter-spacing:-.02em;margin-bottom:28px;">Latest Perspectives</h2>
+    <div class="posts-grid-p">
+      <a class="post-card-p" href="#" onclick="openPerspArticle('p1'); return false;" data-cat="future">
+        <div class="card-visual-p cv-p1"><div class="icon-badge-p">🤖</div></div>
+        <div class="card-body-p">
+          <div class="card-cat-p">Future of Work · Blog</div>
+          <h3>AI &amp; Entry-Level Work: What Changes for Graduates in 2025</h3>
+          <p>AI is not eliminating entry-level jobs — it is raising the floor of what "ready" means.</p>
+          <div class="card-footer-p"><span class="card-meta-p">8 min read · Provenor Insights</span><div class="card-arrow-p"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        </div>
+      </a>
+      <a class="post-card-p" href="#" onclick="openPerspArticle('p2'); return false;" data-cat="frameworks">
+        <div class="card-visual-p cv-p2"><div class="icon-badge-p">🏛️</div></div>
+        <div class="card-body-p">
+          <div class="card-cat-p">Institutions · Framework</div>
+          <h3>The Define–Cultivate–Evidence Model: A Framework for Institutional Readiness</h3>
+          <p>Most institutions have no structured system for building or measuring employability.</p>
+          <div class="card-footer-p"><span class="card-meta-p">10 min read · Provenor Framework</span><div class="card-arrow-p"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        </div>
+      </a>
+      <a class="post-card-p" href="#" onclick="openPerspArticle('p3'); return false;" data-cat="institutions">
+        <div class="card-visual-p cv-p3"><div class="icon-badge-p">📊</div></div>
+        <div class="card-body-p">
+          <div class="card-cat-p">Campus Hiring · Research</div>
+          <h3>How Campus Hiring Is Evolving: From Credentials to Capability Evidence</h3>
+          <p>Campus hiring in India is shifting away from degree + CGPA screening.</p>
+          <div class="card-footer-p"><span class="card-meta-p">7 min read · Provenor Research</span><div class="card-arrow-p"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        </div>
+      </a>
+      <a class="post-card-p" href="#" onclick="openPerspArticle('p4'); return false;" data-cat="ai">
+        <div class="card-visual-p cv-p4"><div class="icon-badge-p">⚡</div></div>
+        <div class="card-body-p">
+          <div class="card-cat-p">AI &amp; Education · Deep Dive</div>
+          <h3>GradiumOS and Readiness at Scale: How AI Makes Employability Measurable</h3>
+          <p>GradiumOS is not an LMS — it is a talent operating system.</p>
+          <div class="card-footer-p"><span class="card-meta-p">11 min read · Provenor Product</span><div class="card-arrow-p"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        </div>
+      </a>
+      <a class="post-card-p" href="#" onclick="openPerspArticle('p5'); return false;" data-cat="employability">
+        <div class="card-visual-p cv-p5"><div class="icon-badge-p">🧭</div></div>
+        <div class="card-body-p">
+          <div class="card-cat-p">Education Gap · Opinion</div>
+          <h3>Curriculum vs Capability: The Structural Gap Institutions Don't Talk About</h3>
+          <p>A degree certifies knowledge acquisition. Employers want demonstrated capability.</p>
+          <div class="card-footer-p"><span class="card-meta-p">6 min read · Provenor Perspectives</span><div class="card-arrow-p"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer style="background:var(--ink);padding:72px 0 32px;">
+  <div class="persp-wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="foot-brand-name">
+          <span class="provenor-logo" aria-label="Provenor">
+            <svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 0 196 28" fill="none">
+              <text x="0" y="22" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="24" letter-spacing="1" fill="#ffffff">PROV</text>
+              <rect x="76" y="5"  width="17" height="4" rx="2" fill="#16A34A"/>
+              <rect x="76" y="12" width="17" height="4" rx="2" fill="#FBBF24"/>
+              <rect x="76" y="19" width="17" height="4" rx="2" fill="#1B3FE6"/>
+              <text x="97" y="22" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="24" letter-spacing="1" fill="#ffffff">NOR</text>
+            </svg>
+          </span>
+        </div>
+        <p>Engineering employability into education.<br>An AI-powered readiness augmentation<br>layer for UGC-approved programs.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Platform</h5>
+        <ul>
+          <li><a href="#how" onclick="closePerspectivesPage()">How It Works</a></li>
+          <li><a href="https://gradiumos.provenorsystems.com" target="_blank" rel="noopener noreferrer" onclick="closePerspectivesPage()"><span class="gos-logo gos-sm"><span class="gos-gradium">Gradium</span><span class="gos-os-wrap"><span class="gos-os">OS</span></span></span></a></li>
+          <li><a href="#stories" onclick="closePerspectivesPage()">Stories</a></li>
+          <li><a href="#perspectives" onclick="closePerspectivesPage()">Perspectives</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Audience</h5>
+        <ul>
+          <li><a href="#institutions" onclick="closePerspectivesPage()">Institutions</a></li>
+          <li><a href="#learners" onclick="closePerspectivesPage()">Learners</a></li>
+          <li><a href="#employers" onclick="closePerspectivesPage()">Employers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="#contact" onclick="closePerspectivesPage()">Schedule a Call</a></li>
+          <li><a href="#contact" onclick="closePerspectivesPage()">Request a Demo</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 Provenor Systems. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Article reader inside perspectives overlay -->
+<div class="persp-article-overlay" id="perspArticleOverlay" onclick="if(event.target===this)closePerspArticle()">
+  <div class="persp-article-modal">
+    <button class="persp-modal-close" onclick="closePerspArticle()">✕</button>
+    <div id="perspArticleContent"></div>
+  </div>
+</div>
+</div>
+
+<script>
+function openPerspectivesPage() {
+  document.getElementById('perspectivesOverlay').style.display = 'block';
+  document.getElementById('perspectivesOverlay').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function closePerspectivesPage() {
+  document.getElementById('perspectivesOverlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+const perspArticles = {
+  featured: {
+    cat: 'Employability · Whitepaper',
+    title: 'Why Curriculum Completion Is Not Enough: The Readiness Gap in Indian Higher Education',
+    meta: 'Provenor Research · 12 min read · December 2025',
+    body: `<p>India produces approximately 1.5 million engineering graduates every year. Add to that another 700,000 MBA graduates, 400,000 graduates from pharmacy and healthcare programmes, and millions more from arts, commerce, and science streams. By any count, this is one of the world's largest annual outputs of degree-holding talent.</p>
+    <p>And yet, every year, hiring managers across sectors cite the same frustration: <em>"They have the degree. They don't have the skills."</em></p>
+    <h2>The Proxy Metric Problem</h2>
+    <p>Curriculum completion — measured by attendance, internal assessments, and final examinations — has become the de facto signal that a student is ready to enter the workforce. This is a proxy metric. It measures exposure to content, not the ability to apply it. It measures what was taught, not what was learned. And it almost never measures what employers actually need: the ability to function under conditions of ambiguity, deliver within constraints, and demonstrate judgment in context.</p>
+    <h2>What Readiness Actually Requires</h2>
+    <p>Employability readiness has three distinct components: domain knowledge (which curriculum does address), applied capability (which requires structured practice beyond classroom instruction), and professional behaviours (communication, self-management, judgment under pressure — which are almost never formally developed in academic settings).</p>
+    <p>Most graduates leave with strong domain knowledge, fragmented applied capability, and underdeveloped professional behaviours. This is not a student failure. It is a structural gap in how education is designed.</p>
+    <h2>The Institutional Response Problem</h2>
+    <p>When placement rates disappoint, institutional responses tend to fall into a predictable pattern: more mock interviews, resume workshops, soft skills seminars. These are surface interventions. They address presentation, not readiness.</p>
+    <blockquote>"A student who cannot think clearly under pressure will not be helped by a better resume. The problem is not the packaging. The problem is what's inside."</blockquote>
+    <p>Provenor's approach starts from the other end: define what readiness actually looks like for specific roles, build structured experiences that develop it, and produce evidence that makes it visible to employers.</p>`
+  },
+  p1: {
+    cat: 'Future of Work · Blog',
+    title: 'AI & Entry-Level Work: What Changes for Graduates in 2025',
+    meta: 'Provenor Insights · 8 min read · November 2025',
+    body: `<p>There is a version of the AI-and-jobs conversation that is mostly noise: AI will take all the jobs; AI will create all the jobs; nobody knows anything. What is more useful is a narrower, more specific question: what does AI do to the experience of being an entry-level hire in 2025?</p>
+    <h2>The Floor Has Risen</h2>
+    <p>AI tools are now baseline at most knowledge-work organisations. Email drafting, data summarisation, basic research, first-pass document review — these tasks, which entry-level hires have traditionally done, are now augmented or replaced by AI tools that senior employees use fluently.</p>
+    <p>This means the entry-level hire's value proposition has shifted. You are no longer primarily valued for your ability to do high-volume, low-complexity tasks. You are valued for your ability to think, judge, adapt, and communicate — the things AI currently cannot do reliably.</p>
+    <h2>What This Means for Preparation</h2>
+    <p>Institutions preparing students for 2025+ employment need to shift their readiness frameworks toward judgment-heavy, communication-intensive, ambiguity-tolerant capabilities. This is not a marginal adjustment — it is a fundamental rethinking of what "employability" means in an AI-augmented workplace.</p>
+    <blockquote>"The graduates who will thrive are those who know how to direct AI tools, evaluate AI outputs, and add the judgment layer that AI cannot."</blockquote>`
+  },
+  p2: {
+    cat: 'Institutions · Framework',
+    title: 'The Define–Cultivate–Evidence Model: A Framework for Institutional Readiness',
+    meta: 'Provenor Framework · 10 min read · October 2025',
+    body: `<p>Provenor's Define–Cultivate–Evidence framework provides a systematic approach to building readiness at institutional scale — one that works within existing UGC curriculum rather than replacing it.</p>
+    <h2>Stage 1: Define</h2>
+    <p>Before you can build readiness, you need a shared definition of what readiness looks like for your graduates. This means mapping the specific roles your graduates typically enter, the capability standards those roles require, and the current gap between where students are and where those standards sit.</p>
+    <p>Without definition, every employability initiative is a guess. With it, you have a north star that allows you to measure progress and attribute outcomes.</p>
+    <blockquote>"A readiness standard is not a job description. It is a capability profile — the minimum applied capability required to succeed in a role within the first 90 days."</blockquote>
+    <h2>Stage 2: Cultivate</h2>
+    <p>Cultivation is the structured, progressive building of identified capabilities through applied experience. This is not classroom instruction — it is the designed sequence of challenges, projects, and feedback loops that moves students from awareness to proficiency.</p>
+    <h2>Stage 3: Evidence</h2>
+    <p>Evidence is the transformation of applied work into verifiable signals. The goal is to produce artefacts that employers can evaluate — work samples, assessments, readiness profiles — that communicate capability more clearly than a transcript ever could.</p>`
+  },
+  p3: {
+    cat: 'Campus Hiring · Research',
+    title: 'How Campus Hiring Is Evolving: From Credentials to Capability Evidence',
+    meta: 'Provenor Research · 7 min read · September 2025',
+    body: `<p>Campus hiring in India is changing faster than most placement offices realise. The shift is not dramatic — it is gradual and uneven — but the direction is clear: employers are moving away from credential-based screening and toward evidence of applied capability.</p>
+    <h2>What We Heard from Hiring Managers</h2>
+    <ul>
+      <li><strong>CGPA is becoming a threshold, not a differentiator.</strong> Most firms now use a minimum CGPA cut-off but no longer rank candidates above that threshold.</li>
+      <li><strong>Projects and portfolios are rising in importance.</strong> Interviewers increasingly ask to see documented project work.</li>
+      <li><strong>Self-awareness is valued explicitly.</strong> Multiple hiring managers mentioned that self-aware hires require significantly less management overhead.</li>
+    </ul>
+    <h2>The Placement Office's Challenge</h2>
+    <p>Placement offices are caught in a structural bind: employers want evidence of applied capability, but institutions produce credential documentation.</p>
+    <blockquote>"We get 200 CVs that all look the same. Everyone has done an internship. Everyone has a 7.5 GPA. We have no way to know who can actually do the work."</blockquote>`
+  },
+  p4: {
+    cat: 'AI & Education · Deep Dive',
+    title: 'GradiumOS and Readiness at Scale: How AI Makes Employability Measurable',
+    meta: 'Provenor Product · 11 min read · August 2025',
+    body: `<p>The challenge with employability at institutional scale is not that the problem is unsolvable — it is that the traditional solutions do not scale. A dedicated placement officer can meaningfully support 200 students. But institutions with 5,000 or 50,000 students need a different approach.</p>
+    <h2>The Three Layers of GradiumOS</h2>
+    <p><strong>Diagnostics Layer.</strong> At the start of each term, GradiumOS assesses students against role-specific capability standards — producing a readiness gap profile.</p>
+    <p><strong>Cultivation Layer.</strong> Based on the gap profile, GradiumOS generates personalised learning pathways with structured challenge sequences and AI-assisted feedback.</p>
+    <p><strong>Evidence Layer.</strong> As students complete cultivation tracks, GradiumOS builds a verified portfolio of capability evidence shareable with employers.</p>
+    <blockquote>"AI doesn't replace the mentor. It makes mentorship possible at a scale where mentors don't exist in sufficient numbers."</blockquote>`
+  },
+  p5: {
+    cat: 'Education Gap · Opinion',
+    title: 'Curriculum vs Capability: The Structural Gap Institutions Don\'t Talk About',
+    meta: 'Provenor Perspectives · 6 min read · July 2025',
+    body: `<p>There is a polite fiction that runs through Indian higher education: if we teach students the right things, in the right sequence, with the right assessments, they will emerge ready to work. The degree is the proof. The marks are the evidence.</p>
+    <p>This fiction is becoming increasingly expensive to maintain.</p>
+    <h2>The Distinction That Matters</h2>
+    <p>A curriculum teaches knowledge — facts, frameworks, concepts, methods. Applied capability is different: the ability to take knowledge and use it to produce useful outcomes under conditions of ambiguity, time pressure, and real-world constraint.</p>
+    <blockquote>"Knowing how a DCF model works is different from being able to build one under pressure, defend it to a CFO, and update it based on feedback. Only one of these things gets you hired."</blockquote>
+    <h2>The Reputational Calculus Is Changing</h2>
+    <p>Five years ago, a degree from a mid-tier engineering college was a near-automatic ticket to at least an interview. That is no longer true. The curriculum–capability gap is structural. It will not close through intent. It closes through infrastructure.</p>`
+  }
+};
+
+function openPerspArticle(id) {
+  const a = perspArticles[id];
+  if (!a) return;
+  document.getElementById('perspArticleContent').innerHTML = `
+    <div class="persp-modal-cat">${a.cat}</div>
+    <h1>${a.title}</h1>
+    <div class="persp-article-meta">${a.meta}</div>
+    <div class="persp-article-body">${a.body}</div>
+  `;
+  document.getElementById('perspArticleOverlay').classList.add('open');
+}
+
+function closePerspArticle() {
+  document.getElementById('perspArticleOverlay').classList.remove('open');
+}
+
+function filterPersp(el, cat) {
+  document.querySelectorAll('.persp-tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const cards = document.querySelectorAll('.post-card-p');
+  cards.forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+
+</body>
+</html>
